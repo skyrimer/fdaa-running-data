@@ -9,11 +9,11 @@ from src.data_models import (
 )
 from src.parser_s2 import get_exercise_heartbeat, get_sleep_duration_minutes, get_daily_activity_minutes
 
-DATA_DIR = Path("../data/suspect_2")
+DATA_DIR = Path("data/suspect_2")
 
 # (exercise_index, start_strip_seconds, end_strip_seconds)
 DATE_ID_MAPPER = {
-    "2026-03-02": (3, 10, 0),
+    "2026-03-02": (3, 10, 60),
     "2026-03-04": (1, 0, 0),
     "2026-03-06": (2, 0, 0),
     "2026-03-09": (6, 0, 0),
@@ -21,7 +21,7 @@ DATE_ID_MAPPER = {
     "2026-03-13": (1, 0, 0),
     "2026-03-16": (0, 0, 0),
     "2026-03-18": (0, 0, 0),
-    # "2026-03-20": (0, 0, 0),
+    "2026-03-20": (4, 0, 0),
 }
 
 

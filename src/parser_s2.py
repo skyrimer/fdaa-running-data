@@ -9,7 +9,7 @@ Public API
 """
 
 import json
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 from typing import Optional, Union
 
@@ -18,28 +18,19 @@ import pandas as pd
 
 DATA_DIR = Path("data/suspect_2")
 
-_EXERCISE_TYPES = {
-    0: "Other/Custom",
-    1001: "Walking",
-    1002: "Running",
-    1003: "Hiking",
-    2001: "Treadmill",
-    2002: "Elliptical",
-    10001: "Indoor Cycling",
-    11007: "Outdoor Cycling",
-    13001: "Pilates",
-    13002: "Yoga",
-    14001: "Swimming",
-    15001: "Circuit Training",
-    15002: "Strength Training",
-    15003: "Stretching",
-    15005: "Functional Training",
-}
-
 
 # =============================================================================
 # Internal helpers
 # =============================================================================
+
+def _parse_date(_date: str | datetime) -> date:
+    """Parse a date string or datetime object into a datetime object."""
+    if isinstance(_date, str):
+        return datetime.strptime(_date, "%Y-%m-%d").date()
+    elif isinstance(_date, datetime):
+        return _date.date()
+    raise ValueError(f"Invalid date format: {_date}")
+
 
 def _find_csv(data_dir: Path, pattern: str) -> Optional[Path]:
     files = list(data_dir.glob(pattern))
@@ -81,11 +72,9 @@ def _load_exercises(data_dir: Path) -> pd.DataFrame:
             start = pd.to_datetime(row.get("com.samsung.health.exercise.start_time"))
             if pd.isna(start):
                 continue
-            ex_type = row.get("com.samsung.health.exercise.exercise_type")
             records.append({
                 "exercise_id": row.get("com.samsung.health.exercise.datauuid"),
                 "start_time": start,
-                "exercise_type_label": _EXERCISE_TYPES.get(int(ex_type) if pd.notna(ex_type) else 0, "Unknown"),
             })
         except (ValueError, TypeError):
             continue
@@ -230,12 +219,7 @@ def get_exercise_heartbeat(
 
     data_dir = Path(data_dir)
 
-    if isinstance(date, str):
-        date = datetime.strptime(date, "%Y-%m-%d").date()
-    elif isinstance(date, datetime):
-        date = date.date()
-
-    exercises = _get_exercises_for_date(data_dir, date)
+    exercises = _get_exercises_for_date(data_dir, _parse_date(date))
     if exercises.empty or exercise_index >= len(exercises):
         return pd.DataFrame(columns=["timestamp", "heart_rate", "exercise_id"])
 
@@ -267,10 +251,7 @@ def get_sleep_duration_minutes(
     """
     data_dir = Path(data_dir)
 
-    if isinstance(date, str):
-        date = datetime.strptime(date, "%Y-%m-%d").date()
-    elif isinstance(date, datetime):
-        date = date.date()
+    date = _parse_date(date)
 
     try:
         df = _load_sleep_combined(data_dir)
@@ -308,16 +289,9 @@ def get_daily_activity_minutes(
     Returns:
         Total active time in minutes, or 0.0 if no data is available.
     """
-    data_dir = Path(data_dir)
-
-    if isinstance(date, str):
-        date = datetime.strptime(date, "%Y-%m-%d").date()
-    elif isinstance(date, datetime):
-        date = date.date()
-
     try:
-        df = _load_activity_day_summary(data_dir)
-        row = df[df["date"] == date]
+        df = _load_activity_day_summary(Path(data_dir))
+        row = df[df["date"] ==  _parse_date(date)]
         if not row.empty:
             return round(row.iloc[0]["active_time_min"], 1)
     except Exception:
