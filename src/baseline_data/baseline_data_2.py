@@ -7,7 +7,8 @@ from src.data_models import (
     SuspectMetadata,
     SuspectRun,
 )
-from src.parser_s2 import get_exercise_heartbeat, get_sleep_duration_minutes, get_daily_activity_minutes
+from src.parser_s2 import get_exercise_heartbeat, get_sleep_duration_minutes, get_daily_activity_minutes, get_daily_step_count
+from src.weather import get_weather_for_dates, EINDHOVEN_ALTITUDE_M
 
 DATA_DIR = Path("data/suspect_2")
 
@@ -36,6 +37,8 @@ def _build_suspect_data_2() -> SuspectExperiment:
         watch_type="Samsung Galaxy Watch 7",
     )
 
+    weather = get_weather_for_dates(list(DATE_ID_MAPPER.keys()))
+
     runs = []
     for date_str, (exercise_index, start_strip, end_strip) in DATE_ID_MAPPER.items():
         hr_df = get_exercise_heartbeat(
@@ -53,11 +56,14 @@ def _build_suspect_data_2() -> SuspectExperiment:
             for _, row in hr_df.iterrows()
         ]
 
+        temperature, atm_pressure = weather[date_str]
         run_metadata = RunMetadata(
-            atm_pressure=1013.25,  # TODO: fix
-            temperature=20.0,  # TODO: fix
+            atm_pressure=atm_pressure,
+            temperature=temperature,
+            altitude=EINDHOVEN_ALTITUDE_M,
             sleep_duration=get_sleep_duration_minutes(DATA_DIR, date_str),
             daily_activity=get_daily_activity_minutes(DATA_DIR, date_str) - (len(per_second_data) // 60),
+            steps_count=get_daily_step_count(DATA_DIR, date_str, exercise_index),
         )
 
         runs.append(SuspectRun(
@@ -74,3 +80,11 @@ def _build_suspect_data_2() -> SuspectExperiment:
 
 
 SUSPECT_DATA_2 = _build_suspect_data_2()
+
+if __name__ == "__main__":
+    output = Path("processed")
+    output.mkdir(parents=True, exist_ok=True)
+    (output / f"{SUSPECT_DATA_2.suspect_id}.json").write_text(
+        SUSPECT_DATA_2.model_dump_json(indent=2)
+    )
+    print(f"Saved to processed/{SUSPECT_DATA_2.suspect_id}.json")

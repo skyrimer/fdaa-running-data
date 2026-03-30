@@ -8,6 +8,7 @@ from src.data_models import (
     SuspectRun,
 )
 from src.parser_s3 import _parse_records, get_exercise_heartbeat, get_daily_steps
+from src.weather import EINDHOVEN_ALTITUDE_M
 
 XML_PATH = Path("src/baseline_data/export.xml")
 
@@ -55,6 +56,11 @@ def _build_suspect_data_3() -> SuspectExperiment:
         ]
 
         run_metadata = RunMetadata(
+            atm_pressure=1013.25,  # TODO: fix
+            temperature=20.0,  # TODO: fix
+            altitude=EINDHOVEN_ALTITUDE_M,
+            sleep_duration=480,  # TODO: fix
+            daily_activity=60.0,  # TODO: fix
             steps_count=get_daily_steps(steps, date_str),
         )
 

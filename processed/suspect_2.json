@@ -13,10 +13,12 @@
     {
       "run_id": "s2_run_2026-03-02",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1018.71,
+        "temperature": 10.42,
+        "altitude": 17.0,
         "sleep_duration": 433,
-        "daily_activity": 147.0
+        "daily_activity": 147.0,
+        "steps_count": 11204.0
       },
       "per_second_data": [
         {
@@ -4540,10 +4542,12 @@
     {
       "run_id": "s2_run_2026-03-04",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1024.73,
+        "temperature": 9.69,
+        "altitude": 17.0,
         "sleep_duration": 412,
-        "daily_activity": 161.2
+        "daily_activity": 161.2,
+        "steps_count": 11944.0
       },
       "per_second_data": [
         {
@@ -8851,10 +8855,12 @@
     {
       "run_id": "s2_run_2026-03-06",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1018.94,
+        "temperature": 11.34,
+        "altitude": 17.0,
         "sleep_duration": 225,
-        "daily_activity": 107.2
+        "daily_activity": 107.2,
+        "steps_count": 9481.0
       },
       "per_second_data": [
         {
@@ -13302,10 +13308,12 @@
     {
       "run_id": "s2_run_2026-03-09",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1018.41,
+        "temperature": 10.47,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": 112.69999999999999
+        "daily_activity": 112.69999999999999,
+        "steps_count": 9794.0
       },
       "per_second_data": [
         {
@@ -17673,10 +17681,12 @@
     {
       "run_id": "s2_run_2026-03-11",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1010.91,
+        "temperature": 9.41,
+        "altitude": 17.0,
         "sleep_duration": 404,
-        "daily_activity": 70.1
+        "daily_activity": 70.1,
+        "steps_count": 8544.0
       },
       "per_second_data": [
         {
@@ -22140,10 +22150,12 @@
     {
       "run_id": "s2_run_2026-03-13",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1003.66,
+        "temperature": 8.19,
+        "altitude": 17.0,
         "sleep_duration": 431,
-        "daily_activity": 103.7
+        "daily_activity": 103.7,
+        "steps_count": 10131.0
       },
       "per_second_data": [
         {
@@ -26671,10 +26683,12 @@
     {
       "run_id": "s2_run_2026-03-16",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1012.54,
+        "temperature": 7.3,
+        "altitude": 17.0,
         "sleep_duration": 374,
-        "daily_activity": 89.7
+        "daily_activity": 89.7,
+        "steps_count": 6815.0
       },
       "per_second_data": [
         {
@@ -31126,10 +31140,12 @@
     {
       "run_id": "s2_run_2026-03-18",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1022.32,
+        "temperature": 10.1,
+        "altitude": 17.0,
         "sleep_duration": 443,
-        "daily_activity": 69.8
+        "daily_activity": 69.8,
+        "steps_count": 2805.0
       },
       "per_second_data": [
         {
@@ -35593,10 +35609,12 @@
     {
       "run_id": "s2_run_2026-03-20",
       "metadata": {
-        "atm_pressure": 1013.25,
-        "temperature": 20.0,
+        "atm_pressure": 1019.82,
+        "temperature": 8.86,
+        "altitude": 17.0,
         "sleep_duration": 470,
-        "daily_activity": 90.0
+        "daily_activity": 90.0,
+        "steps_count": 9670.0
       },
       "per_second_data": [
         {

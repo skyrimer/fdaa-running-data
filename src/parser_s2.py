@@ -6,6 +6,7 @@ Public API
     get_exercise_heartbeat()      Per-second HR for a specific exercise on a given day
     get_sleep_duration_minutes()  Total sleep duration in minutes for a given night
     get_daily_activity_minutes()  Total active time in minutes for a given day
+    get_daily_step_count()        Daily step count minus experiment-run steps for a given day
 """
 
 import json
@@ -75,6 +76,7 @@ def _load_exercises(data_dir: Path) -> pd.DataFrame:
             records.append({
                 "exercise_id": row.get("com.samsung.health.exercise.datauuid"),
                 "start_time": start,
+                "step_count": 0 if pd.isna(count_val := row.get("com.samsung.health.exercise.count")) else int(count_val),
             })
         except (ValueError, TypeError):
             continue
@@ -191,6 +193,36 @@ def _load_activity_day_summary(data_dir: Path) -> pd.DataFrame:
 
 
 # =============================================================================
+# Pedometer helpers
+# =============================================================================
+
+def _load_pedometer_day_summary(data_dir: Path) -> pd.DataFrame:
+    csv_file = _find_csv(data_dir, "com.samsung.shealth.tracker.pedometer_day_summary.*.csv")
+    if not csv_file:
+        raise FileNotFoundError(f"Pedometer day summary CSV not found in {data_dir}")
+
+    df = _load_csv(csv_file)
+    records = []
+    for _, row in df.iterrows():
+        try:
+            day_ms = row.get("day_time")
+            if pd.isna(day_ms):
+                continue
+            records.append({
+                "date": _ms_to_dt(int(day_ms)).date(),
+                "step_count": int(row.get("step_count") or 0),
+            })
+        except (ValueError, TypeError):
+            continue
+
+    result = pd.DataFrame(records)
+    if not result.empty:
+        result = result.groupby("date", as_index=False)["step_count"].max()
+        result = result.sort_values("date").reset_index(drop=True)
+    return result
+
+
+# =============================================================================
 # Public API
 # =============================================================================
 
@@ -294,6 +326,45 @@ def get_daily_activity_minutes(
         row = df[df["date"] ==  _parse_date(date)]
         if not row.empty:
             return round(row.iloc[0]["active_time_min"], 1)
+    except Exception:
+        pass
+
+    return 0.0
+
+
+def get_daily_step_count(
+    data_dir: Union[str, Path],
+    date: Union[str, datetime],
+    exercise_index: int = 0,
+) -> float:
+    """Daily step count for a given date, excluding steps taken during the experiment run.
+
+    Args:
+        data_dir: Path to the Samsung Health export directory.
+        date: Target date as "YYYY-MM-DD" string or datetime.
+        exercise_index: Zero-based index of the experiment run exercise on that day
+            (same value used in get_exercise_heartbeat). Its step count is subtracted
+            from the daily total.
+
+    Returns:
+        Daily steps minus run steps, or 0.0 if no data is available.
+    """
+    try:
+        parsed_date = _parse_date(date)
+        data_dir = Path(data_dir)
+
+        summary = _load_pedometer_day_summary(data_dir)
+        row = summary[summary["date"] == parsed_date]
+        if row.empty:
+            return 0.0
+        daily_steps = int(row.iloc[0]["step_count"])
+
+        exercises = _get_exercises_for_date(data_dir, parsed_date)
+        run_steps = 0
+        if not exercises.empty and exercise_index < len(exercises):
+            run_steps = int(exercises.iloc[exercise_index]["step_count"])
+
+        return float(max(0, daily_steps - run_steps))
     except Exception:
         pass
 

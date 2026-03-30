@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Literal, Optional
+from typing import Literal
 
 from pydantic import BaseModel, Field
 
@@ -21,13 +21,14 @@ class SuspectMetadata(BaseModel):
 
 
 class RunMetadata(BaseModel):
-    atm_pressure: Optional[float] = Field(None, gt=0, description="Atmospheric pressure in hPa")
-    temperature: Optional[float] = Field(None, gt=-273.15, description="Temperature in Celsius")
-    sleep_duration: Optional[int] = Field(None, ge=0, description="Total sleep duration in minutes")
-    daily_activity: Optional[float] = Field(None, ge=0, le=1440,
+    atm_pressure: float = Field(..., gt=0, description="Atmospheric pressure in hPa")
+    temperature: float = Field(..., gt=-273.15, description="Temperature in Celsius")
+    altitude: float = Field(..., ge=-500, description="Altitude above sea level in meters")
+    sleep_duration: int = Field(..., ge=0, description="Total sleep duration in minutes")
+    daily_activity: float = Field(..., ge=0, le=1440,
         description="Minutes of daily activity outside running (e.g. cycling, gym, walking)"
     )
-    steps_count: Optional[float] = Field(None, ge=0, description="Total step count for the day")
+    steps_count: float = Field(..., ge=0, description="Total step count for the day")
 
 
 class RunSecondData(BaseModel):
