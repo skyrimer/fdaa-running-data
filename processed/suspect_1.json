@@ -13,10 +13,11 @@
     {
       "run_id": "s6_run_2026-03-02",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1018.71,
+        "temperature": 10.42,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": null,
+        "daily_activity": 25.0,
         "steps_count": 3169.0
       },
       "per_second_data": [
@@ -57,10 +58,11 @@
     {
       "run_id": "s6_run_2026-03-04",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1024.73,
+        "temperature": 9.69,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": null,
+        "daily_activity": 70.0,
         "steps_count": 10443.0
       },
       "per_second_data": [
@@ -109,10 +111,11 @@
     {
       "run_id": "s6_run_2026-03-06",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1018.94,
+        "temperature": 11.34,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": null,
+        "daily_activity": 40.0,
         "steps_count": 5194.0
       },
       "per_second_data": [
@@ -157,10 +160,11 @@
     {
       "run_id": "s6_run_2026-03-11",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1010.91,
+        "temperature": 9.41,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": null,
+        "daily_activity": 55.0,
         "steps_count": 6783.0
       },
       "per_second_data": [
@@ -205,10 +209,11 @@
     {
       "run_id": "s6_run_2026-03-14",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1000.61,
+        "temperature": 4.3,
+        "altitude": 17.0,
         "sleep_duration": 232,
-        "daily_activity": null,
+        "daily_activity": 30.0,
         "steps_count": 3213.0
       },
       "per_second_data": [
@@ -261,10 +266,11 @@
     {
       "run_id": "s6_run_2026-03-16",
       "metadata": {
-        "atm_pressure": null,
-        "temperature": null,
+        "atm_pressure": 1012.54,
+        "temperature": 7.3,
+        "altitude": 17.0,
         "sleep_duration": 0,
-        "daily_activity": null,
+        "daily_activity": 60.0,
         "steps_count": 8296.0
       },
       "per_second_data": [
