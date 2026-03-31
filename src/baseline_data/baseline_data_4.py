@@ -67,13 +67,13 @@ def _build_suspect_data_4() -> SuspectExperiment:
         )
 
         runs.append(SuspectRun(
-            run_id=f"s4_run_{date_str}",
+            run_id=f"P4_run_{date_str}",
             metadata=run_metadata,
             per_second_data=per_second_data,
         ))
 
     return SuspectExperiment(
-        suspect_id="suspect_4",
+        suspect_id="P4",
         metadata=metadata,
         runs=runs,
     )
@@ -84,7 +84,7 @@ SUSPECT_DATA_4 = _build_suspect_data_4()
 if __name__ == "__main__":
     output = Path("processed")
     output.mkdir(parents=True, exist_ok=True)
-    (output / f"{SUSPECT_DATA_4.suspect_id}.json").write_text(
+    (output / f"JBM170_HR_Day1-21_{SUSPECT_DATA_4.suspect_id}.json").write_text(
         SUSPECT_DATA_4.model_dump_json(indent=2)
     )
-    print(f"Saved to processed/{SUSPECT_DATA_4.suspect_id}.json")
+    print(f"Saved to processed/JBM170_HR_Day1-21_{SUSPECT_DATA_4.suspect_id}.json")

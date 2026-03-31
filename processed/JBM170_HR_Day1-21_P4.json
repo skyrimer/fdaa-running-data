@@ -1,5 +1,5 @@
 {
-  "suspect_id": "suspect_4",
+  "suspect_id": "P4",
   "metadata": {
     "age": 24,
     "sex": "F",
@@ -11,7 +11,7 @@
   },
   "runs": [
     {
-      "run_id": "s4_run_2026-03-03",
+      "run_id": "P4_run_2026-03-03",
       "metadata": {
         "atm_pressure": 1023.18,
         "temperature": 10.91,
@@ -484,7 +484,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-05",
+      "run_id": "P4_run_2026-03-05",
       "metadata": {
         "atm_pressure": 1018.83,
         "temperature": 10.79,
@@ -941,7 +941,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-07",
+      "run_id": "P4_run_2026-03-07",
       "metadata": {
         "atm_pressure": 1022.94,
         "temperature": 10.37,
@@ -1342,7 +1342,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-10",
+      "run_id": "P4_run_2026-03-10",
       "metadata": {
         "atm_pressure": 1014.96,
         "temperature": 10.75,
@@ -1823,7 +1823,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-12",
+      "run_id": "P4_run_2026-03-12",
       "metadata": {
         "atm_pressure": 1016.53,
         "temperature": 8.44,
@@ -2316,7 +2316,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-14",
+      "run_id": "P4_run_2026-03-14",
       "metadata": {
         "atm_pressure": 1000.61,
         "temperature": 4.3,
@@ -2793,7 +2793,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-17",
+      "run_id": "P4_run_2026-03-17",
       "metadata": {
         "atm_pressure": 1018.05,
         "temperature": 10.02,
@@ -3282,7 +3282,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-19",
+      "run_id": "P4_run_2026-03-19",
       "metadata": {
         "atm_pressure": 1024.13,
         "temperature": 9.6,
@@ -3747,7 +3747,7 @@
       ]
     },
     {
-      "run_id": "s4_run_2026-03-21",
+      "run_id": "P4_run_2026-03-21",
       "metadata": {
         "atm_pressure": 1016.42,
         "temperature": 7.53,

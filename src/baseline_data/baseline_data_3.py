@@ -8,7 +8,7 @@ from src.data_models import (
     SuspectRun,
 )
 from src.parser_s3 import _parse_records, get_exercise_heartbeat, get_daily_steps
-from src.weather import EINDHOVEN_ALTITUDE_M
+from src.weather import get_weather_for_dates, EINDHOVEN_ALTITUDE_M
 
 XML_PATH = Path("src/baseline_data/export.xml")
 
@@ -39,6 +39,8 @@ def _build_suspect_data_3() -> SuspectExperiment:
 
     heart_rates, steps, workouts = _parse_records(XML_PATH)
 
+    weather = get_weather_for_dates(list(DATE_ID_MAPPER.keys()))
+
     runs = []
     for date_str, (start_strip, end_strip, manual_start, manual_end) in DATE_ID_MAPPER.items():
         hr_data = get_exercise_heartbeat(
@@ -55,9 +57,10 @@ def _build_suspect_data_3() -> SuspectExperiment:
             for row in hr_data
         ]
 
+        temperature, atm_pressure = weather[date_str]
         run_metadata = RunMetadata(
-            atm_pressure=1013.25,  # TODO: fix
-            temperature=20.0,  # TODO: fix
+            atm_pressure=atm_pressure,
+            temperature=temperature,
             altitude=EINDHOVEN_ALTITUDE_M,
             sleep_duration=480,  # TODO: fix
             daily_activity=60.0,  # TODO: fix
@@ -65,13 +68,13 @@ def _build_suspect_data_3() -> SuspectExperiment:
         )
 
         runs.append(SuspectRun(
-            run_id=f"s3_run_{date_str}",
+            run_id=f"P3_run_{date_str}",
             metadata=run_metadata,
             per_second_data=per_second_data,
         ))
 
     return SuspectExperiment(
-        suspect_id="suspect_3",
+        suspect_id="P3",
         metadata=metadata,
         runs=runs,
     )
@@ -83,7 +86,7 @@ SUSPECT_DATA_3 = _build_suspect_data_3()
 if __name__ == "__main__":
     output = Path("processed")
     output.mkdir(parents=True, exist_ok=True)
-    (output / f"{SUSPECT_DATA_3.suspect_id}.json").write_text(
+    (output / f"JBM170_HR_Day1-21_{SUSPECT_DATA_3.suspect_id}.json").write_text(
         SUSPECT_DATA_3.model_dump_json(indent=2)
     )
-    print(f"Saved to processed/{SUSPECT_DATA_3.suspect_id}.json")
+    print(f"Saved to processed/JBM170_HR_Day1-21_{SUSPECT_DATA_3.suspect_id}.json")

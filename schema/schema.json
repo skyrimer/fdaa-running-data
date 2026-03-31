@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "JBM170_HR_Day1-21_schema",
+  "title": "JBM170 Heart Rate Experiment — Participant Dataset",
+  "description": "Schema for pseudonymized running-experiment data files (JBM170_HR_Day1-21_P<ID>.json). Each file contains participant metadata and a list of running sessions with per-sample Heart Rate (BPM) recordings.",
+  "type": "object",
+  "required": ["suspect_id", "metadata", "runs"],
+  "additionalProperties": false,
+  "properties": {
+    "suspect_id": {
+      "type": "string",
+      "description": "Pseudonymized participant identifier (e.g., 'P2').",
+      "minLength": 1,
+      "examples": ["P2", "P3", "P4", "P5", "P6"]
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Participant-level anthropometric and experimental metadata.",
+      "required": ["age", "sex", "height", "weight", "lifetime_sports_activity", "target_speed", "watch_type"],
+      "additionalProperties": false,
+      "properties": {
+        "age": {
+          "type": "integer",
+          "description": "Age of the participant at time of experiment (years).",
+          "minimum": 0,
+          "maximum": 120
+        },
+        "sex": {
+          "type": "string",
+          "description": "Biological sex of the participant.",
+          "enum": ["M", "F", "U"]
+        },
+        "height": {
+          "type": "number",
+          "description": "Standing height of the participant (metres).",
+          "exclusiveMinimum": 0,
+          "maximum": 3.0
+        },
+        "weight": {
+          "type": "number",
+          "description": "Body mass of the participant (kilograms).",
+          "exclusiveMinimum": 0,
+          "maximum": 500
+        },
+        "lifetime_sports_activity": {
+          "type": "integer",
+          "description": "Total months of sports participation across the participant's lifetime.",
+          "minimum": 0
+        },
+        "target_speed": {
+          "type": "integer",
+          "description": "Prescribed running pace for the experimental protocol (km/h).",
+          "exclusiveMinimum": 0,
+          "maximum": 50
+        },
+        "watch_type": {
+          "type": "string",
+          "description": "Model of wearable device used to record heart rate (e.g., 'Samsung Galaxy Watch 7').",
+          "minLength": 1
+        }
+      }
+    },
+    "runs": {
+      "type": "array",
+      "description": "Ordered list of running sessions for this participant.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["run_id", "metadata", "per_second_data"],
+        "additionalProperties": false,
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "description": "Unique identifier for this session (e.g., 'P2_run_2026-03-02').",
+            "minLength": 1
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Environmental and contextual metadata for this session.",
+            "required": ["atm_pressure", "temperature", "altitude", "sleep_duration", "daily_activity", "steps_count"],
+            "additionalProperties": false,
+            "properties": {
+              "atm_pressure": {
+                "type": "number",
+                "description": "Atmospheric pressure at session time, sourced from Open-Meteo historical API (hPa).",
+                "exclusiveMinimum": 0
+              },
+              "temperature": {
+                "type": "number",
+                "description": "Ambient air temperature at session time, sourced from Open-Meteo historical API (°C).",
+                "exclusiveMinimum": -273.15
+              },
+              "altitude": {
+                "type": "number",
+                "description": "Altitude above sea level of the session location (metres).",
+                "minimum": -500
+              },
+              "sleep_duration": {
+                "type": "integer",
+                "description": "Total sleep duration on the night preceding the session (minutes).",
+                "minimum": 0
+              },
+              "daily_activity": {
+                "type": "number",
+                "description": "Non-running physical activity on the session day — e.g., walking, cycling, gym (minutes).",
+                "minimum": 0,
+                "maximum": 1440
+              },
+              "steps_count": {
+                "type": "number",
+                "description": "Total step count for the session day.",
+                "minimum": 0
+              }
+            }
+          },
+          "per_second_data": {
+            "type": "array",
+            "description": "Time-series of Heart Rate (BPM) samples recorded during the session.",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["timestamp", "heart_rate"],
+              "additionalProperties": false,
+              "properties": {
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "ISO 8601 absolute timestamp of the sample."
+                },
+                "heart_rate": {
+                  "type": "integer",
+                  "description": "Heart Rate (BPM) measured by the wearable sensor at this timestamp.",
+                  "minimum": 20,
+                  "maximum": 300
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
