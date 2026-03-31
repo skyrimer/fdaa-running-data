@@ -62,8 +62,8 @@ def _build_suspect_data_3() -> SuspectExperiment:
             atm_pressure=atm_pressure,
             temperature=temperature,
             altitude=EINDHOVEN_ALTITUDE_M,
-            sleep_duration=480,  # TODO: fix
-            daily_activity=60.0,  # TODO: fix
+            sleep_duration=420,
+            daily_activity=30.0,
             steps_count=get_daily_steps(steps, date_str),
         )
 
